@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import fakeData from '../../../fakeData';
-import { addToDatabaseCart, getDatabaseCart } from '../../../utilities/databaseManager';
-import Cart from '../../Cart/Cart';
-import Product from '../Product/Product';
+import fakeData from '../../fakeData';
+import { addToDatabaseCart, getDatabaseCart } from '../../utilities/databaseManager';
+import Cart from '../../components/Cart/Cart';
+import Product from '../Header/Product/Product';
 import './Shop.css';
 import { Link } from 'react-router-dom';
 
@@ -20,22 +20,22 @@ const Shop = () => {
             return product;
         })
         setCart(previousCart);
-    },[])
-    
-    const handleAddProduct = (product) =>{
+    }, [])
+
+    const handleAddProduct = (product) => {
         const toBeAddedKey = product.key
         const sameProduct = cart.find(pd => pd.key === toBeAddedKey);
 
         let count = 1;
         let newCart;
-        if(sameProduct){
+        if (sameProduct) {
             count = sameProduct.quantity + 1;
             sameProduct.quantity = count;
             const others = cart.filter(pd => pd.key !== toBeAddedKey);
             newCart = [...others, sameProduct];
 
         }
-        else{
+        else {
             product.quantity = 1;
             newCart = [...cart, product];
         }
@@ -47,12 +47,12 @@ const Shop = () => {
         <div className="twin-container">
             <div className="product-container">
                 {
-                    products.map(pd => <Product 
+                    products.map(pd => <Product
                         key={pd.key}
-                        showAddToCart = {true}
-                        handleAddProduct = {handleAddProduct}
+                        showAddToCart={true}
+                        handleAddProduct={handleAddProduct}
                         product={pd}
-                        >
+                    >
                     </Product>)
                 }
             </div>
@@ -63,7 +63,7 @@ const Shop = () => {
                     </Link>
                 </Cart>
             </div>
-            
+
         </div>
     );
 };
